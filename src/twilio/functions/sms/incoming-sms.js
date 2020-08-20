@@ -16,6 +16,7 @@ exports.handler = function incomingSms(context, event, callback) {
   base("Requests")
     .select({
       maxRecords: 1,
+      view: "Recent Requests",
       fields: ["Phone"],
       filterByFormula: `({Phone} = '${phone}')`,
     })
