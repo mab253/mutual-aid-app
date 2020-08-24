@@ -14,6 +14,7 @@ exports.handler = function incomingSms(context, event, callback) {
   const requestsbase = Airtable.base("apppK7mrvMPcwtv6d"); // request base
 
   let name = "";
+  let last = "";
   let volrecord = "";
 
   if (podpass === "pod") {
@@ -42,6 +43,7 @@ exports.handler = function incomingSms(context, event, callback) {
           records.forEach(function passRequest(record) { // eslint-disable-line
             console.log("phone number checks out!");
             name = record.get("First Name");
+            last = record.get("Last Name");
             volrecord = record.get("Vol Table Record");
             createRecord();
           });
@@ -62,6 +64,7 @@ exports.handler = function incomingSms(context, event, callback) {
         Message: "this is a request for a pod",
         "First Name": name,
         "Intake volunteer": [volrecord],
+        "Delivery volunteer": `${name} ${last}`,
         "Pod?": "pod",
       },
       function responseTxt(err, record) {
